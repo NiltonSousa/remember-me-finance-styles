@@ -1,12 +1,16 @@
-// import Main from "./components/main/main";
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FunctionComponent } from "react";
+import HomePage from "./pages/home/home.page";
 
-function App() {
+const App: FunctionComponent = () => {
   return (
-    <>
-      <div className="App"></div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

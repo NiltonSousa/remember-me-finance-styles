@@ -13,7 +13,9 @@ import {
   RegisterInputContainer,
 } from "./register.styles";
 
-interface SignUpForm {
+import { BillService } from "../../services/bill";
+
+interface RegisterForm {
   name: string;
   value: string;
   expireDate: string;
@@ -22,35 +24,29 @@ interface SignUpForm {
 const RegisterBillPage = () => {
   const {
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<SignUpForm>();
+  } = useForm<RegisterForm>();
 
-  //   try {
-  //     setIsLoading(true);
+  const handleSubmitPress = async (data: RegisterForm) => {
+    try {
 
-  //     const userCredentials = await createUserWithEmailAndPassword(
-  //       auth,
-  //       data.email,
-  //       data.password
-  //     );
+      const billService = new BillService();
 
-  //     await addDoc(collection(db, "users"), {
-  //       id: userCredentials.user.uid,
-  //       email: userCredentials.user.email,
-  //       firstName: data.firstName,
-  //       lastName: data.lastName,
-  //       provider: "firebase",
-  //     });
-  //   } catch (error) {
-  //     const _error = error as AuthError;
+      const billCreated = await billService.createBill({
+        clientId: "VQX2UJ",
+        name: data.name,
+        value: data.value,
+        expireDate: new Date(data.expireDate).toISOString(),
+        daysBeforeExpireDateToRemember: "5"
+      }
+      )
 
-  //     if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
-  //       return setError("email", { type: "alreadyInUse" });
-  //     }
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      if (billCreated) console.log("Criou")
+    } catch (error) {
+      console.log("Deu Ruim", error)
+    }
+  }
 
   return (
     <>
@@ -97,7 +93,7 @@ const RegisterBillPage = () => {
             }}
           >
             <div style={{ width: "100px" }}>
-              <CustomButton>Cadastrar</CustomButton>
+              <CustomButton onClick={() => handleSubmit(handleSubmitPress)()}>Cadastrar</CustomButton>
             </div>
 
             <div style={{ width: "100px" }}>

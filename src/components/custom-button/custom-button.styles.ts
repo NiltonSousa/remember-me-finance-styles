@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Colors from "../../theme/theme.colors";
 
 export const CustomButtonContainer = styled.button`
-  width: 100%;
   background-color: #1762a7;
   color: ${Colors.text.white};
   display: flex;

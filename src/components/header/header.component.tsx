@@ -9,13 +9,17 @@ const Header = () => {
     navigate("/register");
   };
 
+  const handleRatingClick = () => {
+    navigate("/rating");
+  };
+
   return (
     <HeaderContainer>
       <HeaderItems>
         <HeaderItem onClick={handleLRegisterClick}>Cadastrar</HeaderItem>
         <HeaderItem>Relatórios</HeaderItem>
-        <HeaderItem>Suporte</HeaderItem>
-        <HeaderItem>Avalie</HeaderItem>
+        <HeaderItem onClick={handleSuportClick}>Suporte</HeaderItem>
+        <HeaderItem onClick={handleRatingClick}>Avalie</HeaderItem>
       </HeaderItems>
     </HeaderContainer>
   );

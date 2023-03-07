@@ -13,6 +13,10 @@ const Header = () => {
     navigate("/rating");
   };
 
+  const handleSuportClick = () => {
+    navigate("/suport");
+  };
+
   return (
     <HeaderContainer>
       <HeaderItems>

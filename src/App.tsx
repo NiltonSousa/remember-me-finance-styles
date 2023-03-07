@@ -15,6 +15,7 @@ const App: FunctionComponent = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/register" element={<RegisterBillPage />} />
         <Route path="/rating" element={<StarRatingPage />} />
+        <Route path="/suport" element={<SuportPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,6 +14,7 @@ import {
   LoginSubtitle
 } from './login.styles'
 import Logo from "../../assets/remember-me-icon.png"
+import { useNavigate } from 'react-router-dom'
 
 interface LoginForm {
   email: string
@@ -25,6 +26,12 @@ const LoginPage = () => {
     register,
     formState: { errors }
   } = useForm<LoginForm>()
+
+  const navigate = useNavigate();
+
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
 
   return (
     <>
@@ -92,7 +99,7 @@ const LoginPage = () => {
 
               <CustomButton
                 startIcon={<BsGoogle size={18} />}
-              // onClick={handleSignInWithGooglePress}>
+                onClick={handleHomeClick}
               >
                 Entrar com o Google
               </CustomButton>

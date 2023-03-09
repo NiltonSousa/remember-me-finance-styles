@@ -1,9 +1,10 @@
-import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 // Components
 import CustomButton from '../../components/custom-button/custom-button.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
 
 // Styles
 import {
@@ -14,7 +15,6 @@ import {
   LoginSubtitle
 } from './login.styles'
 import Logo from "../../assets/remember-me-icon.png"
-import { useNavigate } from 'react-router-dom'
 
 interface LoginForm {
   email: string
@@ -27,11 +27,22 @@ const LoginPage = () => {
     formState: { errors }
   } = useForm<LoginForm>()
 
-  const navigate = useNavigate();
+  const handleLogin = (credentialResponse: any) => {
+    var obj = jwt_decode(credentialResponse.credential);
+    var data = JSON.stringify(obj);
+    console.log(data);
 
-  const handleHomeClick = () => {
-    navigate("/home");
-  };
+    //   const data = {your data to send to server};
+
+    //   const config = {
+    //     method: 'POST',
+    //     url: 'your backend server or endpoint',
+    //     headers: {},
+    //     data: data
+    //   }
+
+    // await axios(config)
+  }
 
   return (
     <>
@@ -96,13 +107,11 @@ const LoginPage = () => {
 
               <LoginSubtitle>ou entre com o sua conta Google</LoginSubtitle>
 
-
-              <CustomButton
-                startIcon={<BsGoogle size={18} />}
-                onClick={handleHomeClick}
-              >
-                Entrar com o Google
-              </CustomButton>
+              <GoogleOAuthProvider clientId="65080618448-ej9l48kpfbqmifb6e6kloajm5dnl2qfa.apps.googleusercontent.com">
+                <GoogleLogin
+                  onSuccess={handleLogin}
+                />
+              </GoogleOAuthProvider>
 
             </LoginContent>
           </LoginContainer>

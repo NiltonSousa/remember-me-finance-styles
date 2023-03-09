@@ -1,19 +1,18 @@
-import styled from 'styled-components'
-import Colors from '../../theme/theme.colors'
+import styled from "styled-components";
 
 export const LoginContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const LoginHeadline = styled.p`
   font-weight: 600;
   font-size: 1.3rem;
   margin-bottom: 20px;
-  color: white
-`
+  color: white;
+`;
 
 export const LoginContent = styled.div`
   display: flex;
@@ -24,7 +23,7 @@ export const LoginContent = styled.div`
   @media (max-width: 768px) {
     width: 90%;
   }
-`
+`;
 
 export const LoginSubtitle = styled.p`
   color: white;
@@ -35,7 +34,7 @@ export const LoginSubtitle = styled.p`
   text-align: center;
   font-weight: 500;
   margin-bottom: 20px;
-`
+`;
 
 export const LoginInputContainer = styled.div`
   width: 100%;
@@ -45,4 +44,4 @@ export const LoginInputContainer = styled.div`
     font-weight: 600;
     margin-bottom: 5px;
   }
-`
+`;

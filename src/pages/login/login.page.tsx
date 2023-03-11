@@ -15,33 +15,68 @@ import {
   LoginSubtitle
 } from './login.styles'
 import Logo from "../../assets/remember-me-icon.png"
+import { ClientService } from '../../services/client';
+import { useNavigate } from 'react-router-dom';
+import { Client } from '../../services/interfaces';
 
 interface LoginForm {
   email: string
   password: string
 }
 
+interface GoogleResponse {
+  sub: string;
+  email: string;
+}
+
 const LoginPage = () => {
   const {
     register,
     formState: { errors }
-  } = useForm<LoginForm>()
+  } = useForm<LoginForm>();
 
-  const handleLogin = (credentialResponse: any) => {
-    var obj = jwt_decode(credentialResponse.credential);
-    var data = JSON.stringify(obj);
-    console.log(data);
+  const navigate = useNavigate();
 
-    //   const data = {your data to send to server};
 
-    //   const config = {
-    //     method: 'POST',
-    //     url: 'your backend server or endpoint',
-    //     headers: {},
-    //     data: data
-    //   }
+  const handleHome = () => {
+    navigate("/home");
+  }
 
-    // await axios(config)
+  const listClientIfExists = async (clientService: ClientService, clientId: string | undefined): Promise<Array<Client> | []> => {
+    if (!clientId) {
+      throw new Error("ClientId must be informed.")
+    }
+
+    return await clientService.listClient(clientId);
+  }
+
+  const insertClient = async (clientService: ClientService, client: Client): Promise<Client> => {
+    return await clientService.createClient(client);
+  }
+
+  const handleLogin = async (credentialResponse: any) => {
+    var googleResponse = jwt_decode(credentialResponse.credential) as GoogleResponse;
+
+    const clientModel: Client = {
+      id: googleResponse.sub,
+      name: googleResponse.email.substring(0, googleResponse.email.indexOf("@")),
+      email: googleResponse.email,
+      billsCount: "0",
+      birthdate: new Date().toLocaleDateString(),
+      phoneNumber: "0",
+    }
+
+    const clientService = new ClientService();
+
+    const existingClient = listClientIfExists(clientService, clientModel.id);
+
+    if (!existingClient) {
+      const clientCreated = await insertClient(clientService, clientModel);
+
+      if (clientCreated) handleHome();
+    } else {
+      handleHome();
+    }
   }
 
   return (
@@ -100,7 +135,7 @@ const LoginPage = () => {
 
               <CustomButton
                 startIcon={<FiLogIn size={18} />}
-              // onClick={() => handleSubmit(handleSubmitPress)()}>
+              // onClick={teste}
               >
                 Entrar
               </CustomButton>
@@ -109,6 +144,7 @@ const LoginPage = () => {
 
               <GoogleOAuthProvider clientId="65080618448-ej9l48kpfbqmifb6e6kloajm5dnl2qfa.apps.googleusercontent.com">
                 <GoogleLogin
+                  text="signin_with"
                   onSuccess={handleLogin}
                 />
               </GoogleOAuthProvider>

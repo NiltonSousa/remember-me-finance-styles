@@ -54,6 +54,14 @@ const LoginPage = () => {
     return await clientService.createClient(client);
   }
 
+  const saveClientId = (clientId: string | undefined) => {
+    if (!clientId) {
+      throw new Error("ClientId must be informed.")
+    }
+
+    localStorage.setItem("clientId", JSON.stringify(clientId))
+  }
+
   const handleLogin = async (credentialResponse: any) => {
     var googleResponse = jwt_decode(credentialResponse.credential) as GoogleResponse;
 
@@ -77,6 +85,8 @@ const LoginPage = () => {
     } else {
       handleHome();
     }
+
+    saveClientId(clientModel.id);
   }
 
   return (

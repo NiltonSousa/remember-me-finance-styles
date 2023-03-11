@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
 
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
+
   const handleLRegisterClick = () => {
     navigate("/register");
   };
@@ -17,9 +21,11 @@ const Header = () => {
     navigate("/suport");
   };
 
+
   return (
     <HeaderContainer>
       <HeaderItems>
+        <HeaderItem onClick={handleHomeClick}>Tela inicial</HeaderItem>
         <HeaderItem onClick={handleLRegisterClick}>Cadastrar</HeaderItem>
         <HeaderItem>Relatórios</HeaderItem>
         <HeaderItem onClick={handleSuportClick}>Suporte</HeaderItem>

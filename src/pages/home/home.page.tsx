@@ -22,6 +22,7 @@ import { Bill } from "../../services/interfaces";
 import Loading from "../../components/load-spinner/load-spinner.component";
 import { sleep } from "../../utils/utils";
 import swal from 'sweetalert';
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const localStorageService = new LocalStorageService();
@@ -30,6 +31,8 @@ const HomePage = () => {
   const [bills, setBills] = useState<Bill[]>([{ clientId: "", name: "", value: "", expireDate: "" }]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCalling, setIsCalling] = useState(true);
+
+  const navigate = useNavigate();
 
   const listBillsByClientId = async (billService: BillService) => {
     const clientId = localStorageService.getItem("clientId");
@@ -89,6 +92,12 @@ const HomePage = () => {
       });
   };
 
+  const handleUpdateBill = (bill: Bill) => {
+    const { id, name, value, clientId, expireDate } = bill;
+
+    navigate("/register", { state: { id, name, value, clientId, expireDate } })
+  }
+
   useEffect(() => {
     if (isLoading) {
       listBillsByClientId(billService);
@@ -130,6 +139,7 @@ const HomePage = () => {
                           height: "20px",
                           width: "20px",
                         }}
+                        onClick={() => handleUpdateBill(bills[key])}
                       />
                       <img
                         src={DeleteIcon}

@@ -17,8 +17,7 @@ import {
 
 import { BillService } from "../../services/bill";
 import { LocalStorageService } from "../../store/local-storage";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 interface RegisterForm {
   name: string;
   value: string;
@@ -33,7 +32,9 @@ const RegisterBillPage = () => {
   } = useForm<RegisterForm>();
 
   const localStorageService = new LocalStorageService();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmitPress = async (data: RegisterForm) => {
     try {
@@ -70,14 +71,14 @@ const RegisterBillPage = () => {
 
       <RegisterContainer>
         <RegisterContent>
-          <RegisterHeadline>Cadastre sua conta</RegisterHeadline>
+          <RegisterHeadline> {!location.state ? "Cadastre sua conta" : "Atualize sua conta"}</RegisterHeadline>
 
           <RegisterInputContainer>
             <p>Nome</p>
             <CustomInput
               hasError={!!errors?.name}
               placeholder="Digite o nome da conta que deseja cadastrar"
-              {...register("name", { required: true })}
+              {...register("name", { required: true, value: location.state ? location.state.name : "" })}
             />
           </RegisterInputContainer>
 
@@ -86,7 +87,7 @@ const RegisterBillPage = () => {
             <CustomInput
               hasError={!!errors?.value}
               placeholder="Neste campo digite o valor que deverá ser pago na fatura"
-              {...register("value", { required: true })}
+              {...register("value", { required: true, value: location.state ? location.state.value : "" })}
             />
           </RegisterInputContainer>
 
@@ -97,6 +98,7 @@ const RegisterBillPage = () => {
               placeholder="dd/MM/YYYY"
               {...register("expireDate", {
                 required: true,
+                value: location.state ? location.state.expireDate : ""
               })}
             />
           </RegisterInputContainer>
@@ -109,7 +111,7 @@ const RegisterBillPage = () => {
             }}
           >
             <div style={{ width: "100px" }}>
-              <CustomButton onClick={() => handleSubmit(handleSubmitPress)()}>Cadastrar</CustomButton>
+              <CustomButton onClick={() => handleSubmit(handleSubmitPress)()}>{!location.state ? "Cadastrar" : "Atualizar"}</CustomButton>
             </div>
           </div>
         </RegisterContent>

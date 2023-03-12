@@ -85,6 +85,7 @@ const LoginPage = () => {
     }
 
     localStorageService.setItem("clientId", clientModel.id);
+    localStorageService.setItem("isAdmin", String(existingClient[0].isAdmin));
   }
 
   const handleLogin = async (data: LoginForm) => {
@@ -106,6 +107,7 @@ const LoginPage = () => {
       await authService.verifyPassword(client[0].password, data.password);
 
       localStorageService.setItem("clientId", client[0].id);
+      localStorageService.setItem("isAdmin", client[0].isAdmin);
 
       handleHome();
     } catch (error) {
@@ -149,7 +151,7 @@ const LoginPage = () => {
 
           <LoginContainer>
             <LoginContent>
-              <LoginHeadline>Entre com a sua conta Admin</LoginHeadline>
+              <LoginHeadline>Entre com uma conta Admin</LoginHeadline>
               <LoginInputContainer>
                 <p style={{ color: 'white' }}>E-mail</p>
                 <CustomInput
@@ -178,7 +180,7 @@ const LoginPage = () => {
                 Entrar
               </CustomButton>
 
-              <LoginSubtitle>ou entre com o sua conta Google</LoginSubtitle>
+              <LoginSubtitle>ou entre com um usuário do Google</LoginSubtitle>
 
               <GoogleOAuthProvider clientId="65080618448-ej9l48kpfbqmifb6e6kloajm5dnl2qfa.apps.googleusercontent.com">
                 <GoogleLogin

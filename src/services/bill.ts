@@ -6,6 +6,10 @@ export class BillService {
     return await Axios.post(`${process.env.REACT_APP_API_URL}/bill`, bill);
   }
 
+  async updateBill(bill: Bill) {
+    return await Axios.put(`${process.env.REACT_APP_API_URL}/bill`, bill);
+  }
+
   async listBill(clientId: string): Promise<Array<Bill>> {
     const bills = await Axios.get(
       `${process.env.REACT_APP_API_URL}/bill?clientId=${clientId.toString()}`

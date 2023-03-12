@@ -36,7 +36,7 @@ const RegisterBillPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSubmitPress = async (data: RegisterForm) => {
+  const insertBill = async (data: RegisterForm) => {
     try {
       const clientId = localStorageService.getItem("clientId");
 
@@ -52,8 +52,7 @@ const RegisterBillPage = () => {
         value: data.value,
         expireDate: new Date(data.expireDate).toISOString(),
         daysBeforeExpireDateToRemember: "5"
-      }
-      )
+      });
 
       if (billCreated) {
         swal("Sucesso", "Conta criada com sucesso!", "success");
@@ -62,6 +61,42 @@ const RegisterBillPage = () => {
       }
     } catch (error) {
       swal("Erro", "Erro ao tentar criar conta, tente novamente mais tarde.", "error");
+    }
+  }
+
+  const updateBill = async (data: RegisterForm) => {
+    try {
+      const clientId = localStorageService.getItem("clientId");
+
+      if (!clientId) {
+        throw new Error("ClientId must have informed.")
+      }
+
+      const billService = new BillService();
+
+      const billUpdated = await billService.updateBill({
+        id: location.state.id,
+        clientId,
+        name: data.name,
+        value: data.value,
+        expireDate: new Date(data.expireDate).toISOString(),
+        daysBeforeExpireDateToRemember: "5"
+      });
+
+      if (billUpdated) {
+        swal("Sucesso", "Conta atualizada com sucesso!", "success");
+        navigate("/home");
+
+      }
+    } catch (error) {
+      swal("Erro", "Erro ao tentar atualizar a conta, tente novamente mais tarde.", "error");
+    }
+  }
+  const handleSubmitPress = async (data: RegisterForm) => {
+    if (!location.state) {
+      await insertBill(data);
+    } else {
+      await updateBill(data);
     }
   }
 

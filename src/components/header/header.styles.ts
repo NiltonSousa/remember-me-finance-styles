@@ -49,7 +49,8 @@ export const HeaderItem = styled.div`
   &:nth-child(1),
   &:nth-child(2),
   &:nth-child(3),
-  &:nth-child(4) {
+  &:nth-child(4),
+  &:nth-child(5) {
     margin-right: 40px;
 
     @media (max-width: 768px) {

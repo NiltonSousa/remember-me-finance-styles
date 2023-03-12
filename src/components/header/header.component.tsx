@@ -30,6 +30,9 @@ const Header = () => {
     navigate("/clients");
   };
 
+  const handleSignOutClick = () => {
+    navigate("/");
+  };
 
   return (
     <HeaderContainer>
@@ -39,6 +42,7 @@ const Header = () => {
         {isAdmin ? <HeaderItem onClick={handleClientClick}>Listagem de usuários</HeaderItem> : ""}
         <HeaderItem onClick={handleSuportClick}>Suporte</HeaderItem>
         <HeaderItem onClick={handleRatingClick}>Avalie</HeaderItem>
+        <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
       </HeaderItems>
     </HeaderContainer>
   );

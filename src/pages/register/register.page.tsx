@@ -129,7 +129,7 @@ const RegisterBillPage = () => {
             <p>Vencimento</p>
             <CustomInput
               hasError={!!errors?.expireDate}
-              placeholder="dd/MM/YYYY"
+              placeholder="MM/dd/YYYY"
               {...register("expireDate", {
                 required: true,
                 value: location.state ? location.state.expireDate : ""

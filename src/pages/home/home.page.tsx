@@ -45,6 +45,16 @@ const HomePage = () => {
     setIsLoading(false);
   }
 
+  const handleDeleteBill = async (billId: string | undefined) => {
+    if (!billId) {
+      throw new Error("BillId must have informed.")
+    }
+
+    const billResponse = await billService.deleteBill(billId);
+
+    if (billResponse.status === 200) console.log("Deletou")
+  }
+
   useEffect(() => {
     if (isLoading) {
       listBillsByClientId(billService);
@@ -86,12 +96,13 @@ const HomePage = () => {
                       />
                       <img
                         src={DeleteIcon}
-                        alt="editar"
+                        alt="deletar"
                         style={{
                           height: "20px",
                           width: "20px",
                           marginLeft: "5px",
                         }}
+                        onClick={() => handleDeleteBill(val.id)}
                       />
                     </Td>
                   </tr>

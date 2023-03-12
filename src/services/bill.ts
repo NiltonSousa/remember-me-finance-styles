@@ -13,4 +13,10 @@ export class BillService {
 
     return bills.data;
   }
+
+  async deleteBill(billId: string) {
+    return await Axios.delete(
+      `${process.env.REACT_APP_API_URL}/bill?billId=${billId}`
+    );
+  }
 }

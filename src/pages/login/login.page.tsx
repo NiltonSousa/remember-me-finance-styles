@@ -71,9 +71,9 @@ const LoginPage = () => {
     }
 
 
-    const existingClient = listClientIfExists(clientService, clientModel.id);
+    const existingClient = await listClientIfExists(clientService, clientModel.id);
 
-    if (!existingClient) {
+    if (!existingClient || existingClient.length === 0) {
       const clientCreated = await insertClient(clientService, clientModel);
 
       if (clientCreated) handleHome();

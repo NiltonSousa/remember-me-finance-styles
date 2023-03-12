@@ -1,4 +1,5 @@
 export interface Bill {
+  id?: string;
   clientId: string;
   name: string;
   value: string;

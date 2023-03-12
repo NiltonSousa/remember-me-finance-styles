@@ -16,3 +16,10 @@ export interface Client {
   phoneNumber: string;
   billsCount: string;
 }
+
+export interface Rating {
+  id?: string;
+  clientId: string;
+  grade: string;
+  insertedAt: string;
+}

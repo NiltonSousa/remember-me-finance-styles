@@ -86,7 +86,6 @@ const RegisterBillPage = () => {
       if (billUpdated) {
         swal("Sucesso", "Conta atualizada com sucesso!", "success");
         navigate("/home");
-
       }
     } catch (error) {
       swal("Erro", "Erro ao tentar atualizar a conta, tente novamente mais tarde.", "error");

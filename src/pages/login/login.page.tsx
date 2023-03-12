@@ -5,6 +5,7 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import CustomInput from '../../components/custom-input/custom-input.component'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
+import swal from 'sweetalert';
 
 // Styles
 import {
@@ -19,6 +20,8 @@ import { ClientService } from '../../services/client';
 import { useNavigate } from 'react-router-dom';
 import { Client } from '../../services/interfaces';
 import { LocalStorageService } from '../../store/local-storage';
+import { refreshPage } from '../../utils/utils';
+import { AuthService } from '../../services/auth';
 
 interface LoginForm {
   email: string
@@ -33,6 +36,7 @@ interface GoogleResponse {
 const LoginPage = () => {
   const {
     register,
+    handleSubmit,
     formState: { errors }
   } = useForm<LoginForm>();
 
@@ -55,7 +59,7 @@ const LoginPage = () => {
     return await clientService.createClient(client);
   }
 
-  const handleLogin = async (credentialResponse: any) => {
+  const handleLoginWithGoogle = async (credentialResponse: any) => {
     const clientService = new ClientService();
     const localStorageService = new LocalStorageService();
 
@@ -70,7 +74,6 @@ const LoginPage = () => {
       phoneNumber: "0",
     }
 
-
     const existingClient = await listClientIfExists(clientService, clientModel.id);
 
     if (!existingClient || existingClient.length === 0) {
@@ -82,6 +85,36 @@ const LoginPage = () => {
     }
 
     localStorageService.setItem("clientId", clientModel.id);
+  }
+
+  const handleLogin = async (data: LoginForm) => {
+    try {
+      const clientService = new ClientService();
+      const authService = new AuthService();
+      const localStorageService = new LocalStorageService();
+
+      const client = await clientService.listClient(undefined, data.email);
+
+      if (client.length === 0) {
+        swal("Error", "Email não existe. Por favor tente novamente", "error").then((ok) => {
+          if (ok) {
+            refreshPage();
+          }
+        });
+      }
+
+      await authService.verifyPassword(client[0].password, data.password);
+
+      localStorageService.setItem("clientId", client[0].id);
+
+      handleHome();
+    } catch (error) {
+      swal("Error", "Senha inválida. Por favor tente novamente", "error").then((ok) => {
+        if (ok) {
+          refreshPage();
+        }
+      });
+    }
   }
 
   return (
@@ -116,7 +149,7 @@ const LoginPage = () => {
 
           <LoginContainer>
             <LoginContent>
-              <LoginHeadline>Entre com a sua conta</LoginHeadline>
+              <LoginHeadline>Entre com a sua conta Admin</LoginHeadline>
               <LoginInputContainer>
                 <p style={{ color: 'white' }}>E-mail</p>
                 <CustomInput
@@ -140,7 +173,7 @@ const LoginPage = () => {
 
               <CustomButton
                 startIcon={<FiLogIn size={18} />}
-              // onClick={teste}
+                onClick={() => handleSubmit(handleLogin)()}
               >
                 Entrar
               </CustomButton>
@@ -150,7 +183,7 @@ const LoginPage = () => {
               <GoogleOAuthProvider clientId="65080618448-ej9l48kpfbqmifb6e6kloajm5dnl2qfa.apps.googleusercontent.com">
                 <GoogleLogin
                   text="signin_with"
-                  onSuccess={handleLogin}
+                  onSuccess={handleLoginWithGoogle}
                 />
               </GoogleOAuthProvider>
 

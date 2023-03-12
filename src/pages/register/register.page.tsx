@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import CustomButton from "../../components/custom-button/custom-button.component";
 import CustomInput from "../../components/custom-input/custom-input.component";
 import Header from "../../components/header/header.component";
+import swal from 'sweetalert';
+
 
 // Styles
 import {
@@ -14,6 +16,8 @@ import {
 } from "./register.styles";
 
 import { BillService } from "../../services/bill";
+import { LocalStorageService } from "../../store/local-storage";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterForm {
   name: string;
@@ -28,13 +32,21 @@ const RegisterBillPage = () => {
     formState: { errors },
   } = useForm<RegisterForm>();
 
+  const localStorageService = new LocalStorageService();
+  const navigate = useNavigate();
+
   const handleSubmitPress = async (data: RegisterForm) => {
     try {
+      const clientId = localStorageService.getItem("clientId");
+
+      if (!clientId) {
+        throw new Error("ClientId must have informed.")
+      }
 
       const billService = new BillService();
 
       const billCreated = await billService.createBill({
-        clientId: "VQX2UJ",
+        clientId,
         name: data.name,
         value: data.value,
         expireDate: new Date(data.expireDate).toISOString(),
@@ -42,9 +54,13 @@ const RegisterBillPage = () => {
       }
       )
 
-      if (billCreated) console.log("Criou")
+      if (billCreated) {
+        swal("Sucesso", "Conta criada com sucesso!", "success");
+        navigate("/home");
+
+      }
     } catch (error) {
-      console.log("Deu Ruim", error)
+      swal("Erro", "Erro ao tentar criar conta, tente novamente mais tarde.", "error");
     }
   }
 
@@ -94,10 +110,6 @@ const RegisterBillPage = () => {
           >
             <div style={{ width: "100px" }}>
               <CustomButton onClick={() => handleSubmit(handleSubmitPress)()}>Cadastrar</CustomButton>
-            </div>
-
-            <div style={{ width: "100px" }}>
-              <CustomButton>Voltar</CustomButton>
             </div>
           </div>
         </RegisterContent>

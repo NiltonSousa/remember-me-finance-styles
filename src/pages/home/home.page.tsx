@@ -21,14 +21,11 @@ import { LocalStorageService } from "../../store/local-storage";
 import { Bill } from "../../services/interfaces";
 import Loading from "../../components/load-spinner/load-spinner.component";
 import { sleep } from "../../utils/utils";
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 
 const HomePage = () => {
   const localStorageService = new LocalStorageService();
   const billService = new BillService();
-  const navigate = useNavigate()
 
   const [bills, setBills] = useState<Bill[]>([{ clientId: "", name: "", value: "", expireDate: "" }]);
   const [isLoading, setIsLoading] = useState(true);
@@ -63,30 +60,33 @@ const HomePage = () => {
     }
     const billService = new BillService();
 
-    confirmAlert({
-      title: 'Confirmação de exclusão',
-      message: 'Você tem certeza disso?',
-      buttons: [
-        {
-          label: 'Sim',
-          onClick: async () => {
-            const billResponse = await billService.deleteBill(billId);
+    swal({
+      title: "Você tem certeza disso?",
+      text: "Uma vez deletado a conta não pode ser recuperada!",
+      icon: "warning",
+      buttons: ["Cancelar", "Ok"],
+      dangerMode: true,
+    })
+      .then(async (willDelete) => {
+        if (willDelete) {
+          const billResponse = await billService.deleteBill(billId);
 
-            if (billResponse.status === 200) {
-              navigate("/home");
-              refreshPage();
-            }
+          if (billResponse.status === 200) {
+            swal("Conta deletada com sucesso!", {
+              icon: "success",
+            }).then((ok) => {
+              if (ok) {
+                refreshPage();
+              }
+            });
+          } else {
+            swal("Erro ao tentar excluir conta", { icon: "error" });
           }
-        },
-        {
-          label: 'Não',
-          onClick: () => {
-            navigate("/home");
-            refreshPage();
-          }
+        } else {
+          swal("Exclusão cancelada");
         }
-      ]
-    });
+
+      });
   };
 
   useEffect(() => {

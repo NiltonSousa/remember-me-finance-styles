@@ -21,10 +21,14 @@ import { LocalStorageService } from "../../store/local-storage";
 import { Bill } from "../../services/interfaces";
 import Loading from "../../components/load-spinner/load-spinner.component";
 import { sleep } from "../../utils/utils";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const localStorageService = new LocalStorageService();
   const billService = new BillService();
+  const navigate = useNavigate()
 
   const [bills, setBills] = useState<Bill[]>([{ clientId: "", name: "", value: "", expireDate: "" }]);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,16 +53,41 @@ const HomePage = () => {
       setIsCalling(false);
     }
   }
+  const refreshPage = () => {
+    window.location.reload();
+  }
 
   const handleDeleteBill = async (billId: string | undefined) => {
     if (!billId) {
       throw new Error("BillId must have informed.")
     }
+    const billService = new BillService();
 
-    const billResponse = await billService.deleteBill(billId);
+    confirmAlert({
+      title: 'Confirmação de exclusão',
+      message: 'Você tem certeza disso?',
+      buttons: [
+        {
+          label: 'Sim',
+          onClick: async () => {
+            const billResponse = await billService.deleteBill(billId);
 
-    if (billResponse.status === 200) console.log("Deletou")
-  }
+            if (billResponse.status === 200) {
+              navigate("/home");
+              refreshPage();
+            }
+          }
+        },
+        {
+          label: 'Não',
+          onClick: () => {
+            navigate("/home");
+            refreshPage();
+          }
+        }
+      ]
+    });
+  };
 
   useEffect(() => {
     if (isLoading) {

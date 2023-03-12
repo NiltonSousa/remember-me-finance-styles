@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { LocalStorageService } from "../../store/local-storage";
 import { Bill } from "../../services/interfaces";
 import Loading from "../../components/load-spinner/load-spinner.component";
-import { sleep } from "../../utils/utils";
+import { refreshPage, sleep } from "../../utils/utils";
 import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
 
@@ -53,9 +53,7 @@ const HomePage = () => {
       setIsCalling(false);
     }
   }
-  const refreshPage = () => {
-    window.location.reload();
-  }
+
 
   const handleDeleteBill = async (billId: string | undefined) => {
     if (!billId) {

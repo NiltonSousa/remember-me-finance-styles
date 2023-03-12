@@ -18,6 +18,7 @@ import Logo from "../../assets/remember-me-icon.png"
 import { ClientService } from '../../services/client';
 import { useNavigate } from 'react-router-dom';
 import { Client } from '../../services/interfaces';
+import { LocalStorageService } from '../../store/local-storage';
 
 interface LoginForm {
   email: string
@@ -54,15 +55,10 @@ const LoginPage = () => {
     return await clientService.createClient(client);
   }
 
-  const saveClientId = (clientId: string | undefined) => {
-    if (!clientId) {
-      throw new Error("ClientId must be informed.")
-    }
-
-    localStorage.setItem("clientId", JSON.stringify(clientId))
-  }
-
   const handleLogin = async (credentialResponse: any) => {
+    const clientService = new ClientService();
+    const localStorageService = new LocalStorageService();
+
     var googleResponse = jwt_decode(credentialResponse.credential) as GoogleResponse;
 
     const clientModel: Client = {
@@ -74,7 +70,6 @@ const LoginPage = () => {
       phoneNumber: "0",
     }
 
-    const clientService = new ClientService();
 
     const existingClient = listClientIfExists(clientService, clientModel.id);
 
@@ -86,7 +81,7 @@ const LoginPage = () => {
       handleHome();
     }
 
-    saveClientId(clientModel.id);
+    localStorageService.setItem("clientId", clientModel.id);
   }
 
   return (

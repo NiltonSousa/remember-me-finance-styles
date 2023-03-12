@@ -8,11 +8,22 @@ export class ClientService {
     return response.data;
   }
 
-  async listClient(cliendId: string) {
-    const client = await axios.get(
-      `${process.env.REACT_APP_API_URL}/client?clientId=${cliendId}`
-    );
+  async listClient(cliendId?: string, email?: string) {
+    if (cliendId) {
+      const client = await axios.get(
+        `${process.env.REACT_APP_API_URL}/client?clientId=${cliendId}`
+      );
+      return client.data;
+    }
 
+    if (email) {
+      const client = await axios.get(
+        `${process.env.REACT_APP_API_URL}/client?email=${email}`
+      );
+      return client.data;
+    }
+
+    const client = await axios.get(`${process.env.REACT_APP_API_URL}/client`);
     return client.data;
   }
 }

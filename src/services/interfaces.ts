@@ -15,6 +15,8 @@ export interface Client {
   email: string;
   phoneNumber: string;
   billsCount: string;
+  password?: string;
+  isAdmin?: boolean;
 }
 
 export interface Rating {

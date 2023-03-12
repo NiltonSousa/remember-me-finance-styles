@@ -114,7 +114,7 @@ const HomePage = () => {
                 <Th>Nome</Th>
                 <Th>Valor</Th>
                 <Th>Dia de Vencimento</Th>
-                <Th></Th>
+                <Th>Ações</Th>
               </tr>
               {bills.map((val, key) => {
                 return (

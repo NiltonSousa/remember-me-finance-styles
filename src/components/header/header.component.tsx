@@ -26,13 +26,17 @@ const Header = () => {
     navigate("/suport");
   };
 
+  const handleClientClick = () => {
+    navigate("/clients");
+  };
+
 
   return (
     <HeaderContainer>
       <HeaderItems>
         <HeaderItem onClick={handleHomeClick}>Tela inicial</HeaderItem>
         <HeaderItem onClick={handleLRegisterClick}>Cadastrar</HeaderItem>
-        {isAdmin ? <HeaderItem>Listagem de usuários</HeaderItem> : ""}
+        {isAdmin ? <HeaderItem onClick={handleClientClick}>Listagem de usuários</HeaderItem> : ""}
         <HeaderItem onClick={handleSuportClick}>Suporte</HeaderItem>
         <HeaderItem onClick={handleRatingClick}>Avalie</HeaderItem>
       </HeaderItems>

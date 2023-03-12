@@ -15,13 +15,41 @@ import {
 
 import EditIcon from "../../assets/edit.icon.png";
 import DeleteIcon from "../../assets/delete.icon.png";
+import { BillService } from "../../services/bill";
+import { useEffect, useState } from "react";
+import { LocalStorageService } from "../../store/local-storage";
+import { Bill } from "../../services/interfaces";
+import Loading from "../../components/load-spinner/load-spinner.component";
+import { sleep } from "../../utils/utils";
 
 const HomePage = () => {
-  const data = [
-    { name: "Luz", value: "80", expireDate: "31" },
-    { name: "Banco", value: "1000", expireDate: "02" },
-    { name: "Internet", value: "120", expireDate: "25" },
-  ];
+  const localStorageService = new LocalStorageService();
+  const billService = new BillService();
+
+  const [bills, setBills] = useState<Bill[]>([{ clientId: "", name: "", value: "", expireDate: "" }]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const listBillsByClientId = async (billService: BillService) => {
+    const clientId = localStorageService.getItem("clientId");
+
+    if (!clientId) {
+      throw new Error("ClientId must have informed.")
+    }
+
+    const billsResponse = await billService.listBill(clientId);
+
+    setBills(billsResponse);
+
+    await sleep(2_000);
+
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    if (isLoading) {
+      listBillsByClientId(billService);
+    }
+  });
 
   return (
     <>
@@ -30,45 +58,47 @@ const HomePage = () => {
       <RegisterContainer>
         <RegisterContent>
           <RegisterHeadline>
-            Bem vindo, aqui esta sua lista de contas
+            {isLoading ? "Carregando lista de contas" : "Bem vindo, aqui esta sua lista de contas"}
           </RegisterHeadline>
 
-          <Table>
-            <tr>
-              <Th>Nome</Th>
-              <Th>Valor</Th>
-              <Th>Dia de Vencimento</Th>
-              <Th></Th>
-            </tr>
-            {data.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <Td>{val.name}</Td>
-                  <Td>{val.value}</Td>
-                  <Td>{val.expireDate}</Td>
-                  <Td>
-                    <img
-                      src={EditIcon}
-                      alt="editar"
-                      style={{
-                        height: "20px",
-                        width: "20px",
-                      }}
-                    />
-                    <img
-                      src={DeleteIcon}
-                      alt="editar"
-                      style={{
-                        height: "20px",
-                        width: "20px",
-                        marginLeft: "5px",
-                      }}
-                    />
-                  </Td>
-                </tr>
-              );
-            })}
-          </Table>
+          {isLoading ? <Loading /> :
+            <Table>
+              <tr>
+                <Th>Nome</Th>
+                <Th>Valor</Th>
+                <Th>Dia de Vencimento</Th>
+                <Th></Th>
+              </tr>
+              {bills.map((val, key) => {
+                return (
+                  <tr key={key}>
+                    <Td>{val.name}</Td>
+                    <Td>{val.value}</Td>
+                    <Td>{val.expireDate}</Td>
+                    <Td>
+                      <img
+                        src={EditIcon}
+                        alt="editar"
+                        style={{
+                          height: "20px",
+                          width: "20px",
+                        }}
+                      />
+                      <img
+                        src={DeleteIcon}
+                        alt="editar"
+                        style={{
+                          height: "20px",
+                          width: "20px",
+                          marginLeft: "5px",
+                        }}
+                      />
+                    </Td>
+                  </tr>
+                );
+              })}
+            </Table>
+          }
         </RegisterContent>
       </RegisterContainer>
     </>

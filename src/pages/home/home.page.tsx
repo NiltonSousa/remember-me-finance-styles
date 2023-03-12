@@ -28,6 +28,7 @@ const HomePage = () => {
 
   const [bills, setBills] = useState<Bill[]>([{ clientId: "", name: "", value: "", expireDate: "" }]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCalling, setIsCalling] = useState(true);
 
   const listBillsByClientId = async (billService: BillService) => {
     const clientId = localStorageService.getItem("clientId");
@@ -40,9 +41,13 @@ const HomePage = () => {
 
     setBills(billsResponse);
 
-    await sleep(2_000);
-
     setIsLoading(false);
+
+
+    if (isCalling) {
+      await sleep(2_000);
+      setIsCalling(false);
+    }
   }
 
   const handleDeleteBill = async (billId: string | undefined) => {
@@ -68,10 +73,13 @@ const HomePage = () => {
       <RegisterContainer>
         <RegisterContent>
           <RegisterHeadline>
-            {isLoading ? "Carregando lista de contas" : "Bem vindo, aqui esta sua lista de contas"}
+            {isCalling && "Carregando lista de contas"}
+            {(!isCalling && bills.length === 0) && "Nenhuma conta cadastrada"}
+            {(!isCalling && bills.length > 0) && "Bem vindo, aqui esta sua lista de contas"}
           </RegisterHeadline>
 
-          {isLoading ? <Loading /> :
+          {isCalling && <Loading />}
+          {(!isCalling && bills.length > 0) &&
             <Table>
               <tr>
                 <Th>Nome</Th>

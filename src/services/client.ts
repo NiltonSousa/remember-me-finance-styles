@@ -3,7 +3,7 @@ import { Client } from "./interfaces";
 
 export class ClientService {
   async createClient(client: Client) {
-    const response = await axios.post("http://localhost:8000/client", client);
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/client`, client);
 
     return response.data;
   }

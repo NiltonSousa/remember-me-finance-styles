@@ -50,12 +50,6 @@ jobs:
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      
-      - name: echos
-        run: |
-          echo "bad"
-          echo ${{ secrets.JWT_SECRET }}
-          echo ${{ secrets.REACT_APP_API_URL }} | sed 's/./& /g' 
         
       
         

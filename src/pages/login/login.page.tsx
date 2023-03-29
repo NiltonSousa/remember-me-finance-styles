@@ -182,7 +182,7 @@ const LoginPage = () => {
 
               <LoginSubtitle>ou entre com um usuário do Google</LoginSubtitle>
 
-              <GoogleOAuthProvider clientId="65080618448-ej9l48kpfbqmifb6e6kloajm5dnl2qfa.apps.googleusercontent.com">
+              <GoogleOAuthProvider clientId="65080618448-437j432fevik2qa604dab4j3vmh2no8l.apps.googleusercontent.com">
                 <GoogleLogin
                   text="signin_with"
                   onSuccess={handleLoginWithGoogle}

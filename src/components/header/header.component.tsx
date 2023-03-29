@@ -11,27 +11,27 @@ const Header = () => {
   const isAdmin = Boolean(localStorageService.getItem("isAdmin") === "true");
 
   const handleHomeClick = () => {
-    navigate("/remember-me-finance-styles/home");
+    navigate("/home");
   };
 
   const handleLRegisterClick = () => {
-    navigate("/remember-me-finance-styles/register");
+    navigate("/register");
   };
 
   const handleRatingClick = () => {
-    navigate("/remember-me-finance-styles/rating");
+    navigate("/rating");
   };
 
   const handleSuportClick = () => {
-    navigate("/remember-me-finance-styles/suport");
+    navigate("/suport");
   };
 
   const handleClientClick = () => {
-    navigate("/remember-me-finance-styles/clients");
+    navigate("/clients");
   };
 
   const handleSignOutClick = () => {
-    navigate("/remember-me-finance-styles");
+    navigate("/");
   };
 
   return (

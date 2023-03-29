@@ -34,7 +34,7 @@ const StarRatingPage = () => {
 
             if (ratingCreated) {
                 swal("Sucesso", "Avaliação publicada com sucesso. Obrigado!", "success");
-                navigate("/remember-me-finance-styles/home");
+                navigate("/home");
             }
         } catch (error) {
             swal("Erro", "Erro ao tentar publicar avaliação, tente novamente mais tarde.", "error");

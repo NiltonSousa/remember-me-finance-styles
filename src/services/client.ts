@@ -17,6 +17,7 @@ export class ClientService {
       const client = await axios.get(
         `${process.env.REACT_APP_API_URL}/client?clientId=${cliendId}`
       );
+
       return client.data;
     }
 

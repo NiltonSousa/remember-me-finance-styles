@@ -12,7 +12,7 @@ const App: FunctionComponent = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/remember-me-finance-styles" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/register" element={<RegisterBillPage />} />
         <Route path="/clients" element={<ClientListPage />} />

@@ -6,6 +6,8 @@ on:
 
 env:
   CI: false
+  REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
 jobs:
   build:
@@ -47,6 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}

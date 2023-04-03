@@ -13,11 +13,11 @@ const App: FunctionComponent = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/remember-me-finance-styles" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/register" element={<RegisterBillPage />} />
-        <Route path="/clients" element={<ClientListPage />} />
-        <Route path="/rating" element={<StarRatingPage />} />
-        <Route path="/suport" element={<SuportPage />} />
+        <Route path="/remember-me-finance-styles/home" element={<HomePage />} />
+        <Route path="/remember-me-finance-styles/register" element={<RegisterBillPage />} />
+        <Route path="/remember-me-finance-styles/clients" element={<ClientListPage />} />
+        <Route path="/remember-me-finance-styles/rating" element={<StarRatingPage />} />
+        <Route path="/remember-me-finance-styles/suport" element={<SuportPage />} />
       </Routes>
     </BrowserRouter>
   );

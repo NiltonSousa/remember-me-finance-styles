@@ -44,7 +44,7 @@ const LoginPage = () => {
 
 
   const handleHome = () => {
-    navigate("/home");
+    navigate("/remember-me-finance-styles/home");
   }
 
   const listClientIfExists = async (clientService: ClientService, clientId: string | undefined): Promise<Array<Client> | []> => {

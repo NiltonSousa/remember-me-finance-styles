@@ -62,12 +62,14 @@ const ClientListPage = () => {
               <tr>
                 <Th>Nome</Th>
                 <Th>Email</Th>
+                <Th>Ultima avaliação</Th>
               </tr>
               {clients.map((val, key) => {
                 return (
                   <tr key={key}>
                     <Td>{val.name}</Td>
                     <Td>{val.email}</Td>
+                    <Td>{val.rating?.length ? val.rating[0].grade : "Nenhuma avaliação"}</Td>
                   </tr>
                 );
               })}

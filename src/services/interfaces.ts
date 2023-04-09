@@ -17,6 +17,7 @@ export interface Client {
   billsCount: string;
   password?: string;
   isAdmin?: boolean;
+  rating?: Rating[];
 }
 
 export interface Rating {

@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   const handleSignOutClick = () => {
-    navigate("/");
+    navigate("/remember-me-finance-styles");
   };
 
   return (

@@ -50,7 +50,7 @@ const RegisterBillPage = () => {
         clientId,
         name: data.name,
         value: data.value,
-        expireDate: new Date(data.expireDate).toISOString(),
+        expireDate: data.expireDate,
         daysBeforeExpireDateToRemember: "5"
       });
 
@@ -79,7 +79,7 @@ const RegisterBillPage = () => {
         clientId,
         name: data.name,
         value: data.value,
-        expireDate: new Date(data.expireDate).toISOString(),
+        expireDate: data.expireDate,
         daysBeforeExpireDateToRemember: "5"
       });
 
@@ -126,10 +126,10 @@ const RegisterBillPage = () => {
           </RegisterInputContainer>
 
           <RegisterInputContainer>
-            <p>Vencimento</p>
+            <p>Dia de vencimento</p>
             <CustomInput
               hasError={!!errors?.expireDate}
-              placeholder="MM/dd/YYYY"
+              placeholder="Digite o dia em que sua conta irá vencer"
               {...register("expireDate", {
                 required: true,
                 value: location.state ? location.state.expireDate : ""

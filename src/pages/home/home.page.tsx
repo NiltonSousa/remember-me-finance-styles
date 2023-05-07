@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { LocalStorageService } from "../../store/local-storage";
 import { Bill } from "../../services/interfaces";
 import Loading from "../../components/load-spinner/load-spinner.component";
-import { refreshPage, sleep } from "../../utils/utils";
+import { sleep } from "../../utils/utils";
 import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
 
@@ -55,7 +55,7 @@ const HomePage = () => {
   }
 
 
-  const handleDeleteBill = async (billId: string | undefined) => {
+  const handleDeleteBill = async (billId: string | undefined, value: Bill) => {
     if (!billId) {
       throw new Error("BillId must have informed.")
     }
@@ -77,7 +77,9 @@ const HomePage = () => {
               icon: "success",
             }).then((ok) => {
               if (ok) {
-                refreshPage();
+                setBills(bills.filter(bill => {
+                  return bill !== value
+                }))
               }
             });
           } else {
@@ -147,7 +149,7 @@ const HomePage = () => {
                           width: "20px",
                           marginLeft: "5px",
                         }}
-                        onClick={() => handleDeleteBill(val.id)}
+                        onClick={() => handleDeleteBill(val.id, val)}
                       />
                     </Td>
                   </tr>

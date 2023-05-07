@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FunctionComponent } from "react";
 import HomePage from "./pages/home/home.page";
 import RegisterBillPage from "./pages/register/register.page";
@@ -10,16 +10,16 @@ import ClientListPage from "./pages/clients/client.page";
 
 const App: FunctionComponent = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/remember-me-finance-styles" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/register" element={<RegisterBillPage />} />
-        <Route path="/clients" element={<ClientListPage />} />
-        <Route path="/rating" element={<StarRatingPage />} />
-        <Route path="/suport" element={<SuportPage />} />
+        <Route path="/remember-me-finance-styles/home" element={<HomePage />} />
+        <Route path="/remember-me-finance-styles/register" element={<RegisterBillPage />} />
+        <Route path="/remember-me-finance-styles/clients" element={<ClientListPage />} />
+        <Route path="/remember-me-finance-styles/rating" element={<StarRatingPage />} />
+        <Route path="/remember-me-finance-styles/suport" element={<SuportPage />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 

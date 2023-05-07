@@ -93,7 +93,7 @@ const HomePage = () => {
   const handleUpdateBill = (bill: Bill) => {
     const { id, name, value, clientId, expireDate } = bill;
 
-    navigate("/register", { state: { id, name, value, clientId, expireDate } })
+    navigate("/remember-me-finance-styles/register", { state: { id, name, value, clientId, expireDate } })
   }
 
   useEffect(() => {

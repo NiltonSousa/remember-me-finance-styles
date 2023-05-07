@@ -11,23 +11,23 @@ const Header = () => {
   const isAdmin = Boolean(localStorageService.getItem("isAdmin") === "true");
 
   const handleHomeClick = () => {
-    navigate("/home");
+    navigate("/remember-me-finance-styles/home");
   };
 
   const handleLRegisterClick = () => {
-    navigate("/register");
+    navigate("/remember-me-finance-styles/register");
   };
 
   const handleRatingClick = () => {
-    navigate("/rating");
+    navigate("/remember-me-finance-styles/rating");
   };
 
   const handleSuportClick = () => {
-    navigate("/suport");
+    navigate("/remember-me-finance-styles/suport");
   };
 
   const handleClientClick = () => {
-    navigate("/clients");
+    navigate("/remember-me-finance-styles/clients");
   };
 
   const handleSignOutClick = () => {

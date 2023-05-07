@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import { FunctionComponent } from "react";
 import HomePage from "./pages/home/home.page";
 import RegisterBillPage from "./pages/register/register.page";
@@ -10,7 +10,7 @@ import ClientListPage from "./pages/clients/client.page";
 
 const App: FunctionComponent = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/remember-me-finance-styles" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
@@ -19,7 +19,7 @@ const App: FunctionComponent = () => {
         <Route path="/rating" element={<StarRatingPage />} />
         <Route path="/suport" element={<SuportPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

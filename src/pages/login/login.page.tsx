@@ -102,6 +102,13 @@ const LoginPage = () => {
             refreshPage();
           }
         });
+      } else if (client.length > 1) {
+        swal("Error", "Mais de um cliente com o mesmo e-mail existente, favor entrar em contato com o suporte enviando um e-mail para: suporte_rememberme@gmail.com", "error").then((ok) => {
+          if (ok) {
+            refreshPage();
+          }
+        });
+        return;
       }
 
       await authService.verifyPassword(client[0].password, data.password);

@@ -39,6 +39,13 @@ export const RatingSubHeadline = styled.p`
   color: white
 `
 
+export const RatingSubText = styled.p`
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+  color: white
+`
+
 export const RatingContent = styled.div`
   display: flex;
   flex-direction: column;

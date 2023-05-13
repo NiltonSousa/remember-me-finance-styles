@@ -17,10 +17,10 @@ export interface Client {
   billsCount: string;
   password?: string;
   isAdmin?: boolean;
-  rating?: Rating[];
+  rating?: IRating[];
 }
 
-export interface Rating {
+export interface IRating {
   id?: string;
   clientId: string;
   grade: string;
